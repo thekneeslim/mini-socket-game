@@ -1,0 +1,34 @@
+h1 {
+  color: green;
+}
+
+.apple {
+  border: 1px solid orange;
+}
+
+.pear {
+  border: 1px solid black;
+}
+
+.chatHistory {
+  height: 500px;
+  border: 1px solid orange;
+}
+
+#falseStatus {
+  visibility: hidden;
+  position: absolute;
+  /*top: 0;
+  left: 0;*/
+}
+
+#trueStatus {
+  visibility: hidden;
+  position: absolute;
+  /*top: 0;
+  left: 0;*/
+}
+
+#leftBar {
+  position: relative;
+}
