@@ -22,11 +22,21 @@
     </section>
   </div>
 
+<!-- SIDE BAR -->
+<div class="ui visible left sidebar vertical inverted labeled icon menu">
+  <a class="item">
+    <i class="home icon"></i>
+    Home
+  </a>
+</div>
+
   <h1>Hello World!</h1>
 
+  <div class="ui stackable container" id="noticeUpdate">
+    <h2>NOTICE</h2>
+  </div>
   <div class="ui stackable grid container">
   <!-- <div class="ui stackable grid"> -->
-
     <!--  LEFT COLUMN -->
     <div class="four wide column apple" id="leftBar">
 
@@ -46,11 +56,19 @@
 
           <div class="row apple">
             <h4>Know the answer? Guess it!</h4>
+            <form id="guessForm">
+              <div class="ui action input">
+                <input type="text" placeholder="Guess me!" required autofocus />
+                <button class="ui icon teal button" id="sendGuess">Guess!</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="row apple">
+            <h4>Previous Guesses!</h4>
             <div class="ui action input">
-              <input type="text">
-              <button class="ui icon teal button">
-                Guess!
-              </button>
+              <ul id="failedGuess">
+              </ul>
             </div>
           </div>
         </div>
@@ -59,7 +77,13 @@
       <div id="trueStatus">
         <div class="row apple">
           <h4>Word to guess!</h4>
-          <h2>Test</h2>
+          <h2 id="guesingWord">Test</h2>
+        </div>
+        <div class="row apple">
+          <h4>Previous Guesses!</h4>
+          <div class="ui action input">
+            <ul id="failedGuess"></ul>
+          </div>
         </div>
       </div>
     </div>

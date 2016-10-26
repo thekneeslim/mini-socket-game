@@ -3,6 +3,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const connections = []
+const words = ["apple", "orange", "pear", "dragonfruit"]
+var currentWord = words[0]
 
 // configure app to use ejs for templates
 app.set('view engine', 'ejs');
@@ -14,8 +16,8 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   console.log('NEW USER CONNECTED');
-  console.log("Socket ID:", socket.id);
-  console.log(`## New connection (${socket.id}). Total unregistered: ${connections.length}.`)
+  // console.log("Socket ID:", socket.id);
+  // console.log(`## New connection (${socket.id}). Total unregistered: ${connections.length}.`)
 
   socket.on('disconnect', function(){
     // find the connection and remove  from the collection
@@ -39,18 +41,19 @@ io.on('connection', function(socket){
   socket.on('join', (userInfo) => {
     connections.push({id: socket.id, user: userInfo})
     let connection = findConnection(socket.id)
-    console.log("Connections:", connections);
+    console.log("Connections:", connections[0]);
+    console.log(`## New connection (${socket.id}). Total registered: ${connections.length}.`)
 
     if (connections.length == 1) {
       console.log("Changing status to True for ", connections[0].user.name);
-      connections[0].user.status = true;
+      connections[0].user.user.status = true;
     }
 
-    socket.emit('welcome', userInfo)
+    socket.emit('layout', {userInfo: userInfo, word:words[0]})
     socket.broadcast.emit('joined', userInfo)
     io.sockets.emit('online', connections)
 
-    console.log(`## ${connection.user.name} joined the chat on (${connection.id}).`)
+    console.log(`## ${connection.user.user.name} joined the chat on (${connection.id}).`)
   })
 
   socket.on('chat message', function(msg){
@@ -61,9 +64,34 @@ io.on('connection', function(socket){
     // socket.broadcast.emit('chatMessage', {message: msg, user: connection.user})
     io.sockets.emit('chatMessage', {message: msg, user: connection.user})
 
-    console.log(`## ${connection.user.name} said: ${msg}`)
+    console.log(`## ${connection.user.user.name} said: ${msg}`)
   });
+
+  // UPDATING MESSAGE
+  socket.on('update', function(msg){
+    console.log("Clicked Yes!", msg);
+    io.sockets.emit('updating', {message: msg})
+  });
+
+  // GUESSING ANSWER
+  socket.on('guessAnswer', function(answer){
+    let connection = findConnection(socket.id)
+    console.log("connection user:", connection);
+    console.log("Guessed answer:", answer);
+
+    if (answer == currentWord) {
+      console.log("Right Answer!", answer);
+      io.sockets.emit('rightAnswer', {user:connection, answer:answer})
+    } else {
+      console.log("Wrong answer:", answer);
+      socket.emit('userWrong')
+      socket.broadcast.emit('failedGuess', answer)
+      io.sockets.emit('updateFailedList', answer)
+    }
+  });
+
 });
+
 
 function findConnection (id) {
   return connections.filter(function (c) { return c.id === id })[0]

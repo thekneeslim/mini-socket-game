@@ -32,3 +32,8 @@ h1 {
 #leftBar {
   position: relative;
 }
+
+#noticeUpdate {
+  padding-bottom: 20px;
+  text-align: center;
+}
