@@ -240,11 +240,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function drawSideBar(connections) {
     console.log("Inside function", connections);
+    // var description = "The role of the moderator will be allocated to one person. The rest of the participants will have to ask the moderator questions resuting in yes/no answers. A point will be given to the person who guessed the word correctly"
+
     $("#userBar").empty()
     $("#userBar").append(
-      '<a class="item">' +
+      '<a class="item" data-inverted="" data-tooltip="Are you ready to play? :)" data-position="right center">' +
+      'GUESS ME!!!' +
       '<i class="help icon"></i>' +
-        'Instructions' +
       '</a>'
     )
 
