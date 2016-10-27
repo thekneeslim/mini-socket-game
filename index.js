@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const connections = []
 const words = ["apple", "beetroot", "orange", "dragonfruit", "guava", "watermelon", "jackfruit", "mango", "pineapple", "strawberry"]
+// const words = ["apple", "beetroot"]
 var x = 0
 var currentWord = words[x]
 
@@ -101,10 +102,11 @@ io.on('connection', function(socket){
 
   socket.on('reset', function(){
     x++
-    if (x > words.length) {
+    if (x > words.length - 1) {
       x = 0;
     }
     currentWord = words[x]
+    console.log(currentWord);
     var word = currentWord.charAt(0).toUpperCase() + currentWord.slice(1);
     io.sockets.emit('resetting', word)
     console.log("resetting to new word:", word);
