@@ -19,9 +19,6 @@ document.addEventListener("DOMContentLoaded", function() {
   //   }
   // });
 
-  // TOGGLE SIDEBAR
-  // $('#menuToggle').sidebar('toggle')
-
   // FORM SUBMISSION TO JOIN CHAT
   $('#JoinForm').submit(function (event) {
     var iconStatus = $('#JoinForm input[name="avatar"]:checked').val()
@@ -30,14 +27,11 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       user.icon = $('#JoinForm input[name="avatar"]:checked').val()
     }
-    console.log(user.icon);
 
     user.name = $('#JoinForm input[name=name]').val();
-    console.log(user.name);
     user.status = false;
     if (user.name.length === 0) return false
 
-    console.log('Joining chat with name: ', user.name)
     socket.emit('join', {user: user})
     $('#sendJoin').focus()
     $('#dimmerInput').removeClass('active')
@@ -47,9 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // APPENDING LAYOUT
   socket.on('layout', function (user) {
-    console.log('Received welcome message: ', user)
     var word = user.word
-    console.log("Word:", word);
 
     // Appending question/guessing/word inputs
     if (user.userInfo.user.status){
@@ -65,36 +57,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // enable the form and add welcome message
     $("#noticeUpdate").empty()
     $("#noticeUpdate").append(
-      '<button class="ui teal button maxWidth" id="noteice' + z + '"> Welcome ' + user.userInfo.user.name + '!</button>'
+      '<button class="ui teal button maxWidth" id="notice' + z + '"> Welcome ' + user.userInfo.user.name + '!</button>'
     )
-    fadeEmpty()
+    fadeEmpty(z)
     z++
   })
 
   // message received that new user has joined the chat
   socket.on('joined', function (user) {
-    console.log(user.name + ' joined left the chat.')
+    console.log(user.name + ' joined the chat.')
   })
 
-  // keep track of who is online
+  // UPDATE SIDEBAR
   socket.on('online', function (connections) {
-    console.log(connections);
-    $("#userBar").empty()
-    $("#userBar").append(
-      '<a class="item">' +
-      '<i class="help icon"></i>' +
-        'Instructions' +
-      '</a>'
-    )
-
-    for (var k = 0; k< connections.length; k++) {
-      $("#userBar").append(
-        '<a class="item">' +
-        '<i class="' + connections[k].user.user.icon + '"></i>' +
-        connections[k].user.user.name +
-        '</a>'
-      )
-    }
+    console.log("connections:", connections);
+    drawSideBar(connections)
   })
 
   // sending a message
@@ -106,12 +83,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // appending the message to chatbox
   socket.on('chatMessage', function(msg){
-    console.log("Message received:", msg);
     // console.log("User:", user);
     if (turnStatus) {
       $('#chatBox').append(
         '<div class="ui icon message messageLength" id="messageInput' + i + '">' +
-          '<div id="statusMsg' + i + '">' +
+          '<div id="statusMsg' + i + '" class="messageIcon">' +
             '<button class="ui negative button no">No</button>' +
             '<button class="ui positive button yes">Yes</button>' +
           '</div>' +
@@ -126,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       $('#chatBox').append(
         '<div class="ui icon message messageLength" id="messageInput' + i + '">' +
-          '<div id="statusMsg' + i + '">' +
+          '<div id="statusMsg' + i + '" class="messageIcon">' +
             '<i class="notched circle loading icon"></i>' +
           '</div>' +
           '<div class="content">' +
@@ -158,7 +134,6 @@ document.addEventListener("DOMContentLoaded", function() {
   socket.on('updating', function (msgUpdate) {
     var parentID =  msgUpdate.message.parentID
     var status = msgUpdate.message.status
-    console.log(msgUpdate);
 
     $("#"+ msgUpdate.message.iconID + "").empty()
 
@@ -176,7 +151,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var answer = $('#guessForm input').val();
     if (user.name.length === 0) return false
 
-    console.log('Guessing: ', answer.toLowerCase())
     socket.emit('guessAnswer', answer.toLowerCase())
     $('#sendGuess').focus()
     $('#guessForm input').val("");
@@ -189,19 +163,20 @@ document.addEventListener("DOMContentLoaded", function() {
   socket.on('userWrong', function (wrongAnswer) {
     // $("#noticeUpdate").empty()
     $("#noticeUpdate").append(
-      '<button class="ui orange button maxWidth">Nope! Try again!</button>'
+      '<button class="ui orange button maxWidth" id="notice' + z + '">Nope! Try again!</button>'
     )
-    fadeEmpty()
+    fadeEmpty(z)
+    z++
   })
 
   // Broadcast to wrong answer
   socket.on('failedGuess', function (wrongAnswer) {
     // $("#noticeUpdate").empty()
-    console.log(wrongAnswer);
     $("#noticeUpdate").append(
-      '<button class="ui orange button maxWidth">' + wrongAnswer + ' was wrongly guessed!</button>'
+      '<button class="ui orange button maxWidth" id="notice' + z + '">' + wrongAnswer + ' was wrongly guessed!</button>'
     )
-    fadeEmpty()
+    fadeEmpty(z)
+    z++
   })
 
   // Updating list of wrong answers
@@ -214,12 +189,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // RIGHT ANSWER
   socket.on('rightAnswer', function (rightAnswer) {
+    console.log("Right Answer:", rightAnswer);
     var answer = rightAnswer.answer.charAt(0).toUpperCase() + rightAnswer.answer.slice(1);
     var user = rightAnswer.user.user.user.name
+    var score = rightAnswer.user.user.user.score
+    var connection = rightAnswer.connections
     $("#noticeUpdate").empty()
     $("#noticeUpdate").append(
       '<button class="ui green button maxWidth">' + answer + ' was correctly guessed by ' + user + '!!!</button>'
     )
+    $('#guessForm :input').attr("disabled", true);
 
     $(".previousAnswers").append(
       '<button class="ui blue button">' +  answer + '</button>'
@@ -230,21 +209,20 @@ document.addEventListener("DOMContentLoaded", function() {
         '<button class="ui blue button maxWidth" id="resetBtn">Reset?</button>'
       )
     }
+    drawSideBar(connection)
   })
 
   // RESETTING
   $(document).on('click','#resetBtn',function() {
     socket.emit('reset');
-    console.log("resetting");
   });
 
   socket.on('resetting', function (newWord) {
-    console.log(newWord);
     if (turnStatus) {
       $("#guesingWord").empty()
       $("#guesingWord").text("" + newWord + "")
     }
-
+    $('#guessForm :input').attr("disabled", false);
     $(".failedGuess").empty()
     $("#chatBox").empty()
     $("#noticeUpdate").empty()
@@ -256,8 +234,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function fadeEmpty(num) {
     setTimeout(function(){
-      $('#noticeUpdate').remove()
+      $('#notice' + num + '').remove()
     }, 3000);
+  }
+
+  function drawSideBar(connections) {
+    console.log("Inside function", connections);
+    $("#userBar").empty()
+    $("#userBar").append(
+      '<a class="item">' +
+      '<i class="help icon"></i>' +
+        'Instructions' +
+      '</a>'
+    )
+
+    for (var k = 0; k< connections.length; k++) {
+      $("#userBar").append(
+        '<a class="item" data-inverted="" data-tooltip="Score: ' + connections[k].user.user.score + '" data-position="right center">' +
+        '<i class="' + connections[k].user.user.icon + '"></i>' +
+        connections[k].user.user.name +
+        '</a>'
+      )
+    }
   }
 
 })

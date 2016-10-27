@@ -84,7 +84,13 @@ io.on('connection', function(socket){
 
     if (answer == currentWord) {
       console.log("Right Answer!", editedAnswer);
-      io.sockets.emit('rightAnswer', {user:connection, answer:editedAnswer})
+      var score = connection.user.user.score
+      console.log("score:", score);
+      score++
+      connection.user.user.score = score
+      console.log("score:", score);
+      console.log("After update score:", connection);
+      io.sockets.emit('rightAnswer', {user:connection, connections:connections, answer:editedAnswer})
     } else {
       console.log("Wrong answer:", editedAnswer);
       socket.emit('userWrong')
