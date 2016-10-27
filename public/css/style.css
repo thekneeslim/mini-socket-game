@@ -92,3 +92,7 @@ h1 {
 #iconBox .field {
   text-align: center !important;
 }
+
+#userBar {
+  width: 106px;
+}

@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", function() {
     status: false
   }
 
+  // highlight radio button$(function(){
+  // $('#JoinForm input[name="avatar"]').click(function(){
+  //   if ($(this).is(':checked')) {
+  //     $(this).css("background-color", "black"));
+  //   }
+  // });
+
   // handle form submission for joining the chat
   $('#JoinForm').submit(function (event) {
     var iconStatus = $('#JoinForm input[name="avatar"]:checked').val()
