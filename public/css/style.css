@@ -18,15 +18,11 @@ h1 {
 #falseStatus {
   visibility: hidden;
   position: absolute;
-  /*top: 0;
-  left: 0;*/
 }
 
 #trueStatus {
   visibility: hidden;
   position: absolute;
-  /*top: 0;
-  left: 0;*/
 }
 
 #leftBar {
@@ -36,4 +32,63 @@ h1 {
 #noticeUpdate {
   padding-bottom: 20px;
   text-align: center;
+  height: 80px;
+  border: 1px solid red;
+}
+
+.ui.button {
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+
+.maxWidth {
+  width: inherit;
+}
+
+#sendGuess {
+  margin-top: 5px;
+  display: block;
+}
+
+.cards {
+  width: 100%;
+}
+
+.dimmer {
+  color: white;
+}
+
+.white {
+  color: white;
+}
+
+.avatarIcon {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.avatarIcon:hover {
+  background-color: black;
+}
+
+#usernameForm {
+  width: 300px;
+}
+
+#joinForm .radioBtns {
+  font-size: 30px;
+  height: 50px;
+  width: 40px;
+}
+
+.iconImage {
+  position: absolute;
+  left: 0;
+  top: 13px;
+}
+
+#iconBox .field {
+  text-align: center !important;
 }

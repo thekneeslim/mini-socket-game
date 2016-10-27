@@ -6,12 +6,22 @@ document.addEventListener("DOMContentLoaded", function() {
   // create an object for storing our user
   var user = {
     name: 'apple',
+    icon: '',
     status: false
   }
 
   // handle form submission for joining the chat
   $('#JoinForm').submit(function (event) {
-    user.name = $('#JoinForm input').val();
+    var iconStatus = $('#JoinForm input[name="avatar"]:checked').val()
+    if (!iconStatus) {
+      user.icon = 'thumbs outline down icon'
+    } else {
+      user.icon = $('#JoinForm input[name="avatar"]:checked').val()
+    }
+    console.log(user.icon);
+
+    user.name = $('#JoinForm input[name=name]').val();
+    console.log(user.name);
     user.status = false;
     if (user.name.length === 0) return false
 
@@ -30,16 +40,30 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Word:", word);
     // enable the form and add welcome message
 
+
+    // Appending user to bar
+    // $("#userBar").append(
+    //   '<a class="item">' +
+    //     '<i class="' + user.userInfo.user.icon + '"></i>' +
+    //       user.userInfo.user.name +
+    //   '</a>'
+    // )
+
     // Appending question/guessing/word inputs
     if (user.userInfo.user.status){
       turnStatus = true;
       $("#trueStatus").css("visibility", "visible")
+      $("#guesingWord").text(""+word+"")
     } else {
       $("#falseStatus").css("visibility", "visible")
     }
+    $("#noticeUpdate").empty()
+    $("#noticeUpdate").append(
+      '<button class="ui teal button maxWidth"> Welcome ' + user.userInfo.user.name + '!</button>'
+    )
 
-    $("#guesingWord").text(""+word+"")
-
+    fadeEmpty()
+;
   })
 
   // message received that new user has joined the chat
@@ -49,6 +73,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // keep track of who is online
   socket.on('online', function (connections) {
+    console.log(connections);
+    $("#userBar").empty()
+    $("#userBar").append(
+      '<a class="item" data-tooltip="Add users to your feed" data-position="right center">' +
+      '<i class="help icon"></i>' +
+        'Instructions' +
+      '</a>'
+    )
+
+    for (var k = 0; k< connections.length; k++) {
+      $("#userBar").append(
+        '<a class="item">' +
+        '<i class="' + connections[k].user.user.icon + '"></i>' +
+        connections[k].user.user.name +
+        '</a>'
+      )
+    }
+
+
     // var names = ''
     // console.log('Connections: ', connections)
     // for (var i = 0; i < connections.length; ++i) {
@@ -149,7 +192,56 @@ document.addEventListener("DOMContentLoaded", function() {
     return false
   })
 
+  // WRONG answer
+  // Emit to person why guessed
   socket.on('userWrong', function (wrongAnswer) {
-
+    // $("#noticeUpdate").empty()
+    $("#noticeUpdate").append(
+      '<button class="ui orange button maxWidth">Nope! Try again!</button>'
+    )
+    fadeEmpty()
   })
+
+  // Broadcast to wrong answer
+  socket.on('failedGuess', function (wrongAnswer) {
+    // $("#noticeUpdate").empty()
+    console.log(wrongAnswer);
+    $("#noticeUpdate").append(
+      '<button class="ui orange button maxWidth">' + wrongAnswer + ' was wrongly guessed!</button>'
+    )
+    fadeEmpty()
+  })
+
+  // Updating list of wrong answers
+  socket.on('updateFailedList', function (wrongAnswer) {
+    var answer = wrongAnswer.charAt(0).toUpperCase() + wrongAnswer.slice(1);
+    $(".failedGuess").append(
+      '<button class="ui orange button failedBtn">' + wrongAnswer + '</button>'
+    )
+  })
+
+  // RIGHT ANSWER
+  socket.on('rightAnswer', function (rightAnswer) {
+    var answer = rightAnswer.answer.charAt(0).toUpperCase() + rightAnswer.answer.slice(1);
+    var user = rightAnswer.user.user.user.name
+    $("#noticeUpdate").empty()
+    $("#noticeUpdate").append(
+      '<button class="ui green button maxWidth">' + answer + ' was correctly guessed by ' + user + '!!!</button>'
+    )
+  })
+
+
+  // =============== FUNCTIONS ===============
+
+  function fadeEmpty() {
+    // setTimeout(function(){
+    //   $('#noticeUpdate').transition('fade')
+    // }, 2000);
+    setTimeout(function(){
+      $('#noticeUpdate').empty()
+    }, 2200);
+  }
+
+  // $('.ui.radio.checkbox').checkbox()
+
 })

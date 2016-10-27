@@ -78,15 +78,16 @@ io.on('connection', function(socket){
     let connection = findConnection(socket.id)
     console.log("connection user:", connection);
     console.log("Guessed answer:", answer);
+    var editedAnswer = answer.charAt(0).toUpperCase() + answer.slice(1);
 
     if (answer == currentWord) {
-      console.log("Right Answer!", answer);
-      io.sockets.emit('rightAnswer', {user:connection, answer:answer})
+      console.log("Right Answer!", editedAnswer);
+      io.sockets.emit('rightAnswer', {user:connection, answer:editedAnswer})
     } else {
-      console.log("Wrong answer:", answer);
+      console.log("Wrong answer:", editedAnswer);
       socket.emit('userWrong')
-      socket.broadcast.emit('failedGuess', answer)
-      io.sockets.emit('updateFailedList', answer)
+      socket.broadcast.emit('failedGuess', editedAnswer)
+      io.sockets.emit('updateFailedList', editedAnswer)
     }
   });
 

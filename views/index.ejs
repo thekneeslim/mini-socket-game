@@ -13,22 +13,72 @@
   <!-- DIMMER -->
   <div class="ui active page dimmer" id="dimmerInput">
     <section id="join" class="content">
-      <form id="JoinForm">
-        <div class="ui action input">
-          <input type="text" placeholder="Username" required autofocus />
-          <button class="ui icon teal button" id="sendJoin">Join!</button>
-        </div>
+      <form id="JoinForm" class="ui form">
+          <h3 class="white">Choose your Avatar</h3>
+          <div class="inline fields ui centered grid" id="iconBox">
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" class="radioBtns" value="send outline icon">
+                <i class="send outline icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="wizard icon" class="radioBtns">
+                <i class="wizard icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="wizard icon" class="radioBtns">
+                <i class="child icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="wizard icon" class="radioBtns">
+                <i class="doctor icon radioBtns iconImage"></i>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="wizard icon" class="radioBtns">
+                <i class="handicap icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="wizard icon" class="radioBtns">
+                <i class="spy icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="wizard icon" class="radioBtns">
+                <i class="student icon radioBtns iconImage"></i>
+              </div>
+            </div>
+          </div>
+
+              <div class="field">
+                <div class="ui action input" id="usernameForm">
+                  <input type="text" name="name" placeholder="Username" required autofocus />
+                  <button class="ui icon teal button" id="sendJoin">Join!</button>
+                </div>
+              </div>
       </form>
     </section>
   </div>
 
 <!-- SIDE BAR -->
-<div class="ui visible left sidebar vertical inverted labeled icon menu">
-  <a class="item">
-    <i class="home icon"></i>
-    Home
-  </a>
+<div class="ui visible left sidebar vertical inverted labeled icon menu" id="userBar">
+  <!-- <a class="item" data-tooltip="Add users to your feed" data-position="right center">
+    <i class="help icon"></i>
+    Instructions
+  </a> -->
 </div>
+
 
   <h1>Hello World!</h1>
 
@@ -41,51 +91,74 @@
     <div class="four wide column apple" id="leftBar">
 
       <!-- FALSE STATUS -->
-        <div id="falseStatus">
-          <div class="row apple" data-tooltip="The more information you get, the closer you get!" data-inverted="" data-position="bottom right">
-            <h4>Type your question here!</h4>
-            <form id="questionForm" class="fluid">
-              <div class="ui fluid action input">
-                <input id="question" type="text">
-                <button class="ui icon teal button">
-                  ?
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div class="row apple">
-            <h4>Know the answer? Guess it!</h4>
-            <form id="guessForm">
-              <div class="ui action input">
-                <input type="text" placeholder="Guess me!" required autofocus />
-                <button class="ui icon teal button" id="sendGuess">Guess!</button>
-              </div>
-            </form>
-          </div>
-
-          <div class="row apple">
-            <h4>Previous Guesses!</h4>
-            <div class="ui action input">
-              <ul id="failedGuess">
-              </ul>
+      <div class="ui cards" id="falseStatus">
+        <div class="card" data-tooltip="The more information you get, the closer you get!" data-inverted="" data-position="bottom right">
+          <div class="content">
+            <div class="header">Question?</div>
+            <div class="meta">Ask me!</div>
+            <div class="description">
+              <form id="questionForm" class="ui form">
+                <div class="ui fluid action input">
+                  <input id="question" type="text">
+                  <button class="ui icon teal button">
+                    ?
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
 
-      <!-- TRUE STATUS -->
-      <div id="trueStatus">
-        <div class="row apple">
-          <h4>Word to guess!</h4>
-          <h2 id="guesingWord">Test</h2>
+        <div class="card" data-tooltip="Know the answer?" data-inverted="" data-position="bottom right">
+          <div class="content">
+            <div class="header">Know the Answer?</div>
+            <div class="meta">Guess me!</div>
+            <div class="description">
+              <form id="guessForm" class="ui form">
+                <div class="field">
+                  <input type="text" placeholder="Guess me!" required autofocus />
+                </div>
+                <button class="ui teal button" type="submit" id="sendGuess">Guess!</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="row apple">
-          <h4>Previous Guesses!</h4>
-          <div class="ui action input">
-            <ul id="failedGuess"></ul>
+
+        <div class="card">
+          <div class="content">
+            <div class="header">Previous Guesses</div>
+            <div class="meta">Too bad, they're all wrong!</div>
+            <div class="description failedGuess">
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- TRUE STATUS -->
+      <div class="ui cards" id="trueStatus">
+        <div class="card">
+          <div class="content">
+            <div class="header">Word to Guess!</div>
+            <div class="meta">Give them a hard time!</div>
+            <div class="description">
+              <h2 id="guesingWord">Test</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="content">
+            <div class="header">Previous Guesses</div>
+            <div class="meta">Too bad, they're all wrong!</div>
+            <div class="description failedGuess">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
     </div>
 
     <!-- RIGHT COLUMN -->
@@ -98,4 +171,5 @@
     </div>
 
   </div>
+
 </body>
