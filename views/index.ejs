@@ -101,7 +101,7 @@
   </div> -->
 
 <div class="ui stackable grid">
-  <div class="two wide column apple">
+  <div class="two wide column apple" id="sideBar">
     <!-- SIDE BAR -->
     <div class="ui vertical inverted labeled icon menu" id="userBar">
     </div>
@@ -154,7 +154,15 @@
 
           <div class="card">
             <div class="content">
-              <div class="header">Previous Guesses</div>
+              <div class="header">Previous Answers</div>
+              <div class="previousAnswers">
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="content">
+              <div class="header">Incorrect Guesses</div>
               <div class="meta">Too bad, they're all wrong!</div>
               <div class="description failedGuess">
               </div>
@@ -169,14 +177,22 @@
               <div class="header">Word to Guess!</div>
               <div class="meta">Give them a hard time!</div>
               <div class="description">
-                <h2 id="guesingWord">Test</h2>
+                <h2 id="guesingWord"></h2>
               </div>
             </div>
           </div>
 
           <div class="card">
             <div class="content">
-              <div class="header">Previous Guesses</div>
+              <div class="header">Previous Answers</div>
+              <div class="previousAnswers">
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="content">
+              <div class="header">Incorrect Guesses</div>
               <div class="meta">Too bad, they're all wrong!</div>
               <div class="description failedGuess">
               </div>
@@ -192,21 +208,21 @@
       <!-- RIGHT COLUMN -->
       <div class="twelve wide column pear">
         <!-- CHAT HISTORY -->
-        <!-- <div class="row chatHistory">
-          <h4>Clues!</h4>
+        <div class="row chatHistory" id="chatContainer">
+          <h3 id="headerMessage">Clues!</h3>
           <div id="chatBox"></div>
-        </div> -->
+        </div>
 
-        <div class="ui cards row chatHistory" id="chatContainer">
+        <!-- <div class="ui cards row chatHistory" id="chatContainer">
           <div class="card" id="cardMessageBox">
             <div class="content">
               <div class="header" id="headerMessage">Clues!</div>
               <div id="chatBox"></div>
             </div>
-            <!-- <h4 class="headerMessage">Clues!</h4> -->
-            <!-- <div id="chatBox"></div> -->
+            <h4 class="headerMessage">Clues!</h4>
+            <div id="chatBox"></div>
           </div>
-        </div>
+        </div> -->
 
     </div>
   </div>

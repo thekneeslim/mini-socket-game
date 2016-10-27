@@ -3,16 +3,16 @@ body {
 }
 
 .apple {
-  border: 1px solid orange;
+  /*border: 1px solid orange;*/
 }
 
 .pear {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 
 .chatHistory {
   height: 500px;
-  border: 1px solid orange;
+  /*border: 1px solid orange;*/
   overflow-y: scroll;
 }
 
@@ -28,15 +28,15 @@ body {
 
 #leftBar {
   position: relative;
-  height: 540px;
+  height: 650px;
 }
 
 #noticeUpdate {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 40px;
   text-align: center;
   height: 80px;
-  border: 1px solid red;
+  /*border: 1px solid red;*/
 }
 
 .ui.button {
@@ -117,14 +117,23 @@ body {
 #headerMessage {
   margin-left: 5%;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #cardMessageBox {
   width: 95%;
   margin-left: 5%;
-  height: 500px;
+  height: 620px;
 }
 
 #chatContainer {
-  height: 540px;
+  height: 650px;
+  visibility: hidden;
+  border-radius: .28571429rem!important;
+  border: 1px solid #D4D4D5;
+  margin-top: -1.5px;
+}
+
+#sideBar {
+  padding-bottom: 0px;
 }

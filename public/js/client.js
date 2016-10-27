@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   console.log("DOM loaded");
   var i = 0;
+  var z = 0;
   var socket = io();
   var turnStatus = false;
   // create an object for storing our user
@@ -54,17 +55,20 @@ document.addEventListener("DOMContentLoaded", function() {
     if (user.userInfo.user.status){
       turnStatus = true;
       $("#trueStatus").css("visibility", "visible")
-      $("#guesingWord").text(""+word+"")
+      $("#guesingWord").text("" + word + "")
     } else {
       $("#falseStatus").css("visibility", "visible")
     }
 
+    $("#chatContainer").css("visibility", "visible")
+
     // enable the form and add welcome message
     $("#noticeUpdate").empty()
     $("#noticeUpdate").append(
-      '<button class="ui teal button maxWidth"> Welcome ' + user.userInfo.user.name + '!</button>'
+      '<button class="ui teal button maxWidth" id="noteice' + z + '"> Welcome ' + user.userInfo.user.name + '!</button>'
     )
     fadeEmpty()
+    z++
   })
 
   // message received that new user has joined the chat
@@ -217,6 +221,10 @@ document.addEventListener("DOMContentLoaded", function() {
       '<button class="ui green button maxWidth">' + answer + ' was correctly guessed by ' + user + '!!!</button>'
     )
 
+    $(".previousAnswers").append(
+      '<button class="ui blue button">' +  answer + '</button>'
+    )
+
     if (turnStatus) {
       $("#noticeUpdate").append(
         '<button class="ui blue button maxWidth" id="resetBtn">Reset?</button>'
@@ -230,12 +238,25 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("resetting");
   });
 
+  socket.on('resetting', function (newWord) {
+    console.log(newWord);
+    if (turnStatus) {
+      $("#guesingWord").empty()
+      $("#guesingWord").text("" + newWord + "")
+    }
+
+    $(".failedGuess").empty()
+    $("#chatBox").empty()
+    $("#noticeUpdate").empty()
+
+
+  })
 
   // =============== FUNCTIONS ===============
 
-  function fadeEmpty() {
+  function fadeEmpty(num) {
     setTimeout(function(){
-      $('#noticeUpdate').empty()
+      $('#noticeUpdate').remove()
     }, 3000);
   }
 

@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const connections = []
-const words = ["apple", "orange", "pear", "dragonfruit"]
+const words = ["apple", "beetroot", "orange", "dragonfruit", "guava", "watermelon"]
 var x = 0
 var currentWord = words[x]
 
@@ -93,10 +93,13 @@ io.on('connection', function(socket){
     }
   });
 
-  // socket.on('reset', function(){
-  //   x++
-  //   currentWord = words[x]
-  // }
+  socket.on('reset', function(){
+    x++
+    currentWord = words[x]
+    var word = currentWord.charAt(0).toUpperCase() + currentWord.slice(1);
+    io.sockets.emit('resetting', word)
+    console.log("resetting to new word:", word);
+  })
 
 });
 
