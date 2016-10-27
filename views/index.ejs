@@ -122,12 +122,11 @@
         <div class="ui cards" id="falseStatus">
           <div class="card" data-tooltip="The more information you get, the closer you get!" data-inverted="" data-position="bottom right">
             <div class="content">
-              <div class="header">Question?</div>
-              <div class="meta">Ask me!</div>
+              <div class="header">Ask me!</div>
               <div class="description">
                 <form id="questionForm" class="ui form">
                   <div class="ui fluid action input">
-                    <input id="question" type="text">
+                    <input id="question" placeholder="Question" type="text">
                     <button class="ui icon teal button">
                       ?
                     </button>
@@ -140,19 +139,24 @@
           <div class="card" data-tooltip="Know the answer?" data-inverted="" data-position="bottom right">
             <div class="content">
               <div class="header">Know the Answer?</div>
-              <div class="meta">Guess me!</div>
               <div class="description">
                 <form id="guessForm" class="ui form">
-                  <div class="field">
-                    <input type="text" placeholder="Guess me!" required autofocus />
+                  <div class="ui fluid action input">
+                    <input placeholder="Guess me!" type="text">
+                    <button class="ui icon teal button" id="sendGuess">Guess!</button>
                   </div>
-                  <button class="ui teal button" type="submit" id="sendGuess">Guess!</button>
+
+
+                  <!-- <div class="field ui fluid action input">
+                    <input type="text" placeholder="Guess me!" required autofocus />
+                    <button class="ui icon teal button" type="submit" id="sendGuess">Guess!</button>
+                  </div> -->
                 </form>
               </div>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" id="previousAns">
             <div class="content">
               <div class="header">Previous Answers</div>
               <div class="previousAnswers">
@@ -182,7 +186,7 @@
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" id="previousAns">
             <div class="content">
               <div class="header">Previous Answers</div>
               <div class="previousAnswers">

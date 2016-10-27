@@ -49,11 +49,6 @@ body {
   width: inherit;
 }
 
-#sendGuess {
-  margin-top: 5px;
-  display: block;
-}
-
 .cards {
   width: 100%;
 }
@@ -143,16 +138,27 @@ body {
 
 #sideBar {
   padding-bottom: 0px;
+  padding-left: 0px;
 }
 
 .ui.card, .ui.cards>.card {
   background-color: rgba(255,255,255,0.8)
 }
 
-/*i.icon.loading {
-  margin-right: 10px;
-}*/
+.failedGuess {
+  height:140px;
+  overflow-y: scroll;
+}
 
 .messageIcon {
   margin-right: 10px;
+}
+
+#previousAns {
+  height: 150px;
+}
+
+.previousAnswers {
+  height: 110px;
+  overflow-y: scroll;
 }
