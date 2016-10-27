@@ -30,19 +30,6 @@
             </div>
             <div class="field">
               <div class="ui radio checkbox avatarIcon">
-                <input type="radio" name="avatar" value="child icon" class="radioBtns">
-                <i class="child icon radioBtns iconImage"></i>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox avatarIcon">
-                <input type="radio" name="avatar" value="doctor icon" class="radioBtns">
-                <i class="doctor icon radioBtns iconImage"></i>
-              </div>
-            </div>
-
-            <div class="field">
-              <div class="ui radio checkbox avatarIcon">
                 <input type="radio" name="avatar" value="handicap icon" class="radioBtns">
                 <i class="handicap icon radioBtns iconImage"></i>
               </div>
@@ -59,114 +46,169 @@
                 <i class="student icon radioBtns iconImage"></i>
               </div>
             </div>
-          </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="blind icon" class="radioBtns">
+                <i class="blind icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="paw icon" class="radioBtns">
+                <i class="paw icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="hand spock icon" class="radioBtns">
+                <i class="hand spock icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="transgender icon" class="radioBtns">
+                <i class="transgender icon radioBtns iconImage"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox avatarIcon">
+                <input type="radio" name="avatar" value="barcode icon" class="radioBtns">
+                <i class="barcode icon radioBtns iconImage"></i>
+              </div>
+            </div>
 
+          </div>
+          <!-- Submit Button -->
           <div class="field">
-            <div class="ui action input" id="usernameForm">
+            <div class="ui input" id="usernameForm">
               <input type="text" name="name" placeholder="Username" required autofocus />
-              <button class="ui icon teal button" id="sendJoin">Join!</button>
+              <!-- <button class="ui icon teal button" id="sendJoin">Join!</button> -->
             </div>
           </div>
+          <h3>Instructions:</h3>
+          <p>The role of the moderator will be allocated to one person</p>
+          <p>The rest of the participants will have to ask the moderator yes/no questions</p>
+          <p>The moderator will only reply yes or no</p>
+          <p>A point will be given to the person who guessed the word correctly</p>
+          </br>
+          <button class="ui icon teal button" id="sendJoin">Join!</button>
       </form>
     </section>
   </div>
 
-<!-- SIDE BAR -->
-<div class="ui visible left sidebar vertical inverted labeled icon menu" id="userBar">
+  <!-- SIDE BAR -->
+  <!-- <div class="ui visible left vertical inverted sidebar labeled icon menu" id="userBar">
+  </div> -->
+
+<div class="ui stackable grid">
+  <div class="two wide column apple">
+    <!-- SIDE BAR -->
+    <div class="ui vertical inverted labeled icon menu" id="userBar">
+    </div>
+
+  </div>
+  <div class="fourteen wide column">
+
+    <div class="ui stackable container" id="noticeUpdate">
+
+    </div>
+    <div class="ui stackable grid container">
+    <!-- <div class="ui stackable grid"> -->
+      <!--  LEFT COLUMN -->
+
+      <div class="four wide column apple" id="leftBar">
+
+        <!-- FALSE STATUS -->
+        <div class="ui cards" id="falseStatus">
+          <div class="card" data-tooltip="The more information you get, the closer you get!" data-inverted="" data-position="bottom right">
+            <div class="content">
+              <div class="header">Question?</div>
+              <div class="meta">Ask me!</div>
+              <div class="description">
+                <form id="questionForm" class="ui form">
+                  <div class="ui fluid action input">
+                    <input id="question" type="text">
+                    <button class="ui icon teal button">
+                      ?
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-tooltip="Know the answer?" data-inverted="" data-position="bottom right">
+            <div class="content">
+              <div class="header">Know the Answer?</div>
+              <div class="meta">Guess me!</div>
+              <div class="description">
+                <form id="guessForm" class="ui form">
+                  <div class="field">
+                    <input type="text" placeholder="Guess me!" required autofocus />
+                  </div>
+                  <button class="ui teal button" type="submit" id="sendGuess">Guess!</button>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="content">
+              <div class="header">Previous Guesses</div>
+              <div class="meta">Too bad, they're all wrong!</div>
+              <div class="description failedGuess">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRUE STATUS -->
+        <div class="ui cards" id="trueStatus">
+          <div class="card">
+            <div class="content">
+              <div class="header">Word to Guess!</div>
+              <div class="meta">Give them a hard time!</div>
+              <div class="description">
+                <h2 id="guesingWord">Test</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="content">
+              <div class="header">Previous Guesses</div>
+              <div class="meta">Too bad, they're all wrong!</div>
+              <div class="description failedGuess">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="twelve wide column pear">
+        <!-- CHAT HISTORY -->
+        <!-- <div class="row chatHistory">
+          <h4>Clues!</h4>
+          <div id="chatBox"></div>
+        </div> -->
+
+        <div class="ui cards row chatHistory" id="chatContainer">
+          <div class="card" id="cardMessageBox">
+            <div class="content">
+              <div class="header" id="headerMessage">Clues!</div>
+              <div id="chatBox"></div>
+            </div>
+            <!-- <h4 class="headerMessage">Clues!</h4> -->
+            <!-- <div id="chatBox"></div> -->
+          </div>
+        </div>
+
+    </div>
+  </div>
 </div>
-
-
-  <h1>Hello World!</h1>
-
-  <div class="ui stackable container" id="noticeUpdate">
-
-  </div>
-  <div class="ui stackable grid container">
-  <!-- <div class="ui stackable grid"> -->
-    <!--  LEFT COLUMN -->
-
-    <div class="four wide column apple" id="leftBar">
-
-      <!-- FALSE STATUS -->
-      <div class="ui cards" id="falseStatus">
-        <div class="card" data-tooltip="The more information you get, the closer you get!" data-inverted="" data-position="bottom right">
-          <div class="content">
-            <div class="header">Question?</div>
-            <div class="meta">Ask me!</div>
-            <div class="description">
-              <form id="questionForm" class="ui form">
-                <div class="ui fluid action input">
-                  <input id="question" type="text">
-                  <button class="ui icon teal button">
-                    ?
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" data-tooltip="Know the answer?" data-inverted="" data-position="bottom right">
-          <div class="content">
-            <div class="header">Know the Answer?</div>
-            <div class="meta">Guess me!</div>
-            <div class="description">
-              <form id="guessForm" class="ui form">
-                <div class="field">
-                  <input type="text" placeholder="Guess me!" required autofocus />
-                </div>
-                <button class="ui teal button" type="submit" id="sendGuess">Guess!</button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="content">
-            <div class="header">Previous Guesses</div>
-            <div class="meta">Too bad, they're all wrong!</div>
-            <div class="description failedGuess">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TRUE STATUS -->
-      <div class="ui cards" id="trueStatus">
-        <div class="card">
-          <div class="content">
-            <div class="header">Word to Guess!</div>
-            <div class="meta">Give them a hard time!</div>
-            <div class="description">
-              <h2 id="guesingWord">Test</h2>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="content">
-            <div class="header">Previous Guesses</div>
-            <div class="meta">Too bad, they're all wrong!</div>
-            <div class="description failedGuess">
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div class="twelve wide column pear">
-      <!-- CHAT HISTORY -->
-      <div class="row chatHistory">
-        <h4>Clues!</h4>
-        <div id="chatBox"></div>
-      </div>
-    </div>
-
-  </div>
-
 </body>

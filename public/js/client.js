@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function() {
   var user = {
     name: 'apple',
     icon: '',
-    status: false
+    status: false,
+    score: 0
   }
 
   // highlight radio button$(function(){
@@ -17,7 +18,10 @@ document.addEventListener("DOMContentLoaded", function() {
   //   }
   // });
 
-  // handle form submission for joining the chat
+  // TOGGLE SIDEBAR
+  // $('#menuToggle').sidebar('toggle')
+
+  // FORM SUBMISSION TO JOIN CHAT
   $('#JoinForm').submit(function (event) {
     var iconStatus = $('#JoinForm input[name="avatar"]:checked').val()
     if (!iconStatus) {
@@ -45,16 +49,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log('Received welcome message: ', user)
     var word = user.word
     console.log("Word:", word);
-    // enable the form and add welcome message
-
-
-    // Appending user to bar
-    // $("#userBar").append(
-    //   '<a class="item">' +
-    //     '<i class="' + user.userInfo.user.icon + '"></i>' +
-    //       user.userInfo.user.name +
-    //   '</a>'
-    // )
 
     // Appending question/guessing/word inputs
     if (user.userInfo.user.status){
@@ -64,13 +58,13 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
       $("#falseStatus").css("visibility", "visible")
     }
+
+    // enable the form and add welcome message
     $("#noticeUpdate").empty()
     $("#noticeUpdate").append(
       '<button class="ui teal button maxWidth"> Welcome ' + user.userInfo.user.name + '!</button>'
     )
-
     fadeEmpty()
-;
   })
 
   // message received that new user has joined the chat
@@ -83,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log(connections);
     $("#userBar").empty()
     $("#userBar").append(
-      '<a class="item" data-tooltip="Add users to your feed" data-position="right center">' +
+      '<a class="item">' +
       '<i class="help icon"></i>' +
         'Instructions' +
       '</a>'
@@ -97,19 +91,6 @@ document.addEventListener("DOMContentLoaded", function() {
         '</a>'
       )
     }
-
-
-    // var names = ''
-    // console.log('Connections: ', connections)
-    // for (var i = 0; i < connections.length; ++i) {
-    //   if (connections[i].user) {
-    //     if (i > 0) {
-    //       if (i === connections.length - 1) names += ' and '
-    //       else names += ', '
-    //     }
-    //     names += connections[i].user.name
-    //   }
-    // }
   })
 
   // sending a message
@@ -125,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // console.log("User:", user);
     if (turnStatus) {
       $('#chatBox').append(
-        '<div class="ui icon message" id="messageInput' + i + '">' +
+        '<div class="ui icon message messageLength" id="messageInput' + i + '">' +
           '<div id="statusMsg' + i + '">' +
             '<button class="ui negative button no">No</button>' +
             '<button class="ui positive button yes">Yes</button>' +
@@ -140,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
       )
     } else {
       $('#chatBox').append(
-        '<div class="ui icon message" id="messageInput' + i + '">' +
+        '<div class="ui icon message messageLength" id="messageInput' + i + '">' +
           '<div id="statusMsg' + i + '">' +
             '<i class="notched circle loading icon"></i>' +
           '</div>' +
@@ -235,20 +216,27 @@ document.addEventListener("DOMContentLoaded", function() {
     $("#noticeUpdate").append(
       '<button class="ui green button maxWidth">' + answer + ' was correctly guessed by ' + user + '!!!</button>'
     )
+
+    if (turnStatus) {
+      $("#noticeUpdate").append(
+        '<button class="ui blue button maxWidth" id="resetBtn">Reset?</button>'
+      )
+    }
   })
+
+  // RESETTING
+  $(document).on('click','#resetBtn',function() {
+    socket.emit('reset');
+    console.log("resetting");
+  });
 
 
   // =============== FUNCTIONS ===============
 
   function fadeEmpty() {
-    // setTimeout(function(){
-    //   $('#noticeUpdate').transition('fade')
-    // }, 2000);
     setTimeout(function(){
       $('#noticeUpdate').empty()
-    }, 2200);
+    }, 3000);
   }
-
-  // $('.ui.radio.checkbox').checkbox()
 
 })

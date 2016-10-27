@@ -4,7 +4,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const connections = []
 const words = ["apple", "orange", "pear", "dragonfruit"]
-var currentWord = words[0]
+var x = 0
+var currentWord = words[x]
 
 // configure app to use ejs for templates
 app.set('view engine', 'ejs');
@@ -49,7 +50,8 @@ io.on('connection', function(socket){
       connections[0].user.user.status = true;
     }
 
-    socket.emit('layout', {userInfo: userInfo, word:words[0]})
+    var word = currentWord.charAt(0).toUpperCase() + currentWord.slice(1);
+    socket.emit('layout', {userInfo: userInfo, word:word})
     socket.broadcast.emit('joined', userInfo)
     io.sockets.emit('online', connections)
 
@@ -90,6 +92,11 @@ io.on('connection', function(socket){
       io.sockets.emit('updateFailedList', editedAnswer)
     }
   });
+
+  // socket.on('reset', function(){
+  //   x++
+  //   currentWord = words[x]
+  // }
 
 });
 
