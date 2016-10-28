@@ -1,7 +1,15 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+// var express = require('express');
+// var app = express();
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+
+const express = require('express')
+const http = require('http')
+const app = express()
+const port = process.env.PORT || 3000
+const server = http.createServer(app)
+const io = require('socket.io')(server)
+
 const connections = []
 const words = ["apple", "beetroot", "orange", "dragonfruit", "guava", "watermelon", "jackfruit", "mango", "pineapple", "strawberry"]
 // const words = ["apple", "beetroot"]
@@ -15,6 +23,11 @@ app.use(express.static('public'))
 app.get('/', function(req, res){
   res.render('index');
 });
+
+// start ther server listening
+server.listen(port, () => {
+  console.log('Server listening on port: ', server.address().port)
+})
 
 io.on('connection', function(socket){
   console.log('NEW USER CONNECTED');
@@ -119,6 +132,6 @@ function findConnection (id) {
   return connections.filter(function (c) { return c.id === id })[0]
 }
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
+// http.listen(3000, function(){
+//   console.log('listening on *:3000');
+// });
