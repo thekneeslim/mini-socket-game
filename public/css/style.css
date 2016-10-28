@@ -166,3 +166,8 @@ body {
 #titleHeader {
   font-size: 50px;
 }
+
+.clickedIcon{
+  border: 1px solid white;
+  
+}

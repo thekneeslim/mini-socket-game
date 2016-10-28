@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", function() {
     score: 0
   }
 
-  // highlight radio button$(function(){
-  // $('#JoinForm input[name="avatar"]').click(function(){
-  //   if ($(this).is(':checked')) {
-  //     $(this).css("background-color", "black"));
-  //   }
-  // });
+  // BORDER FOR CLICKED icon
+  $(":radio").click(function() {
+    $(this).closest("div").addClass("clickedIcon")
+    // $(this).closest("div").addClass("clickedIcon").parent.siblings.removeClass("clickedIcon");
+  })
+
 
   // FORM SUBMISSION TO JOIN CHAT
   $('#JoinForm').submit(function (event) {
