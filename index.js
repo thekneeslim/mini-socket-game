@@ -3,6 +3,8 @@
 // var http = require('http').Server(app);
 // var io = require('socket.io')(http);
 
+'use strict'
+
 const express = require('express')
 const http = require('http')
 const app = express()
